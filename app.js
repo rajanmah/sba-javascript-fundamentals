@@ -95,20 +95,199 @@ const courseInfo = {
 //   ]
 //OUTPUT
 
-// function getLearnerData(courseInfo,assignmentGroup,[LearnerSubmission]){
+function getLearnerData(courseInfo,assignmentGroup,learnerSubmission){
+  const { id, course_id, group_weight,assignments} = assignmentGroup;
+
+  for (const points of assignments){
+    let pointsPossible=[];
+    pointsPossible.push(pointsPossible = points.points_possible)// points possible
+    // console.log(pointsPossible) 
+
+// console.log(assignments[0].points_possible)
+
+  }
+// average of scores
+  let scoresOne=[];
+  let totalOne = 0
+
+  for (let i=0; i<learnerSubmissions.length; i++){
+    total+= learnerSubmissions[i].submission.score
+    scores.push(learnerSubmissions[i].length)
+
+  }
+  console.log(total);
+
+  let scoresTwo=[];
+  let totalTwo = 0
+
+  for (let i=0; i<learnerSubmissions.length; i++){
+    total+= learnerSubmissions[i].submission.score
+    scores.push(learnerSubmissions[i].length)
+
+  }
+  // console.log(total); //776
 
 
-// function getLearnerData(courseInfo, assignmentGroup, learnerSubmissions){
-// learnerSubmissions.forEach((element)=>console.log(element));
 
+
+
+
+
+let [student1, student2] = learnerSubmission;
+console.log(student1);
+
+for (let learnerId in learnerSubmission){
+  if (learnerSubmission.learner_id===125){
+    console.log("its true")
+  } else {
+    console.log("its false")
+  }
+}
+
+
+
+// let avg = function () {
+  const learner1=learnerSubmission.filter(function(uniqueLearner){
+     uniqueLearner.learner_id===125;
+
+  });
+  console.log(learner1);
+  
+//   const search = objArr.filter(function(item) { 
+//     return item.name === 'julie'; 
+// }); 
+// console.log(search);
 
 // }
 
-// destructuring Object
-function displayCourseId(assignmentGroup){
-    console.log(assignmentGroup.assignments[1][2]);
+
+
+//   for (let i=0; i<assignments.length; i++){
+//     const courseId = assignments.course_id[i]
+// console.log(courseId)
+//   }
+
+
+
+  
+
+
+// return result;//
 }
-displayCourseId(assignmentGroup)
+const result = getLearnerData(courseInfo, assignmentGroup, learnerSubmissions);
+
+// console.log(result);
+
+// destructuring Object
+// function displayCourseId({course_id, group_weight}){
+//     console.log(`the course is ${course_id} and weight is ${group_weight} `);
+// }
+// displayCourseId(assignmentGroup)
+
+
+// let learnerId = [];
+// learnerSubmissions.forEach((LearnId) => )
+
+//Array Destructure
+// const colorArr = ["red", "yellow", "blue", "green", "white", "black"];
+
+// const [one, sond, third] = colorArr;
+// console.log(one, sond, third );
+
+//-----------------------------------
+// Object Desstructure
+// const freeCodeCamp = {
+//   frontend: "React",
+//   backend: "Node",
+//   database: "MongoDB",
+// };
+//------------------------------------
+// const { frontend, backend } = freeCodeCamp;
+
+// console.log(one, two);
+
+
+
+// let arr = [
+//   {val:"a"},
+//   {val:"b"}
+// ];
+
+// const [{val: valueOfA}, {val: valueOfB}] = arr
+
+// console.log(
+//   valueOfA, valueOfB
+// )
+
+// learnerSubmissions.filter(function(learId){
+// console.log(learId)
+//   });
+
+//Array Destruction ------>
+
+  // const learner1 = learnerSubmissions.filter(function(learId){
+  //   return learId.learner_id === 125;
+  // });
+  // // console.log(learner1)
+
+
+  // const learner2 = learnerSubmissions.filter(function(learId){
+  //   return learId.submission[0];
+  // });
+  // console.log(learner2)
+
+
+
+// const {assignments} = assignmentGroup;
+//   console.log( assignments)
+// console.log(assignments[2].points_possible)
+// const pointsPossible= assignments[2].points_possible
+// if (assignments[2].points_possible > 400){
+// console.log("you passed")
+// }
+
+
+
+
+
+// Array of objects -------------------useful--------
+
+var objArr = [ 
+    { 
+        name: 'john', 
+        age: 12, 
+        gender: 'male'
+    }, 
+    { 
+        name: 'jane', 
+        age: 15, 
+        gender: 'female'
+    }, 
+    { 
+        name: 'julie', 
+        age: 20, 
+        gender: 'trans'
+    } 
+]; 
+  
+// console.log("Accessing the Array using the forEach loop:") 
+// objArr.filter(function(item) { 
+//     console.log(item); 
+// }); 
+console.log("Using the Filer method to acces value") 
+const search = objArr.filter(function(item) { 
+    return item.name === 'julie'; 
+}); 
+console.log(search);
+
+
+
+// // console.log(learnerSubmissions.map(({learner_id})=>learner_id))
+// // console.log(learnerSubmissions.map(({assignment_id})=>assignment_id))
+// console.log(learnerSubmissions.map(({submission})=>submission))
+// // console.log(learnerSubmissions.map(({assignment_id})=>assignment_id))
+
+
 
 // console.log(getLearnerData(courseInfo, assignmentGroup, learnerSubmissions));
 
