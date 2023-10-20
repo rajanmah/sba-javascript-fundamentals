@@ -51,7 +51,7 @@ const courseInfo = {
       }
     },
     {
-      learner_id: 125,
+      learner_id:125,
       assignment_id: 3,
       submission: {
         submitted_at: "2023-01-25",
@@ -76,100 +76,114 @@ const courseInfo = {
     }
   ];
 
-  // OUTPUT
-//   [
-//     {
-//     id: ID of the learner 125/132
-//     avg:score1+score2/possible-points1+possible-points2 in PERCENTAGE
-//     assignment_id:{ 
-//     id:1,2;
-//     percentage scored : %%
-//      }
-//      }
-//     {
-//     id:
-//     avg:
-//     assignment_id:
-//   }
-    
-//   ]
-//OUTPUT
 
-function getLearnerData(courseInfo,assignmentGroup,learnerSubmission){
-  const { id, course_id, group_weight,assignments} = assignmentGroup;
+function getLearnerData(courseInfo,assignmentGroup,learnerSubmissions){
 
-  for (const points of assignments){
-    let pointsPossible=[];
-    pointsPossible.push(pointsPossible = points.points_possible)// points possible
-    // console.log(pointsPossible) 
+  try{
+    if (assignmentGroup.course_id !== courseInfo.id){
+  throw new Error ("Invalid Input. The Assignment Id and CourseInfo Id did not match.")
+} 
 
-// console.log(assignments[0].points_possible)
-
-  }
-// average of scores
-  let scoresOne=[];
-  let totalOne = 0
-
-  for (let i=0; i<learnerSubmissions.length; i++){
-    total+= learnerSubmissions[i].submission.score
-    scores.push(learnerSubmissions[i].length)
-
-  }
-  console.log(total);
-
-  let scoresTwo=[];
-  let totalTwo = 0
-
-  for (let i=0; i<learnerSubmissions.length; i++){
-    total+= learnerSubmissions[i].submission.score
-    scores.push(learnerSubmissions[i].length)
-
-  }
-  // console.log(total); //776
-
-
-
-
-
-
-
-let [student1, student2] = learnerSubmission;
-console.log(student1);
-
-for (let learnerId in learnerSubmission){
-  if (learnerSubmission.learner_id===125){
-    console.log("its true")
-  } else {
-    console.log("its false")
-  }
+}catch(error) {
+  console.log(error)  // try catch to ensure course Ids are matched.
 }
 
 
 
-// let avg = function () {
-  const learner1=learnerSubmission.filter(function(uniqueLearner){
-     uniqueLearner.learner_id===125;
+  const { id, course_id, group_weight,assignments} = assignmentGroup; //Destructuring the object assignmentGroup
+  let forTotalScore = assignmentGroup.assignments;
+  let pointsPossible = 0;
+  for (let i=0;i<forTotalScore.length;i++){
+     pointsPossible +=forTotalScore[i].points_possible
+  }
+  console.log(pointsPossible) //returns 700 sum of points_possible of all 3 assignments
 
-  });
-  console.log(learner1);
+
+
+// Number of Objects Each learner Id have -----SHOW
+
+const individualLearner = (learnerSubmissions = []) => {
+  const res = {};
+  for (let i=0; i<learnerSubmissions.length;i++){
+    const{learner_id} = learnerSubmissions[i];
+    if (res.hasOwnProperty(learner_id)){
+      res[learner_id]++;
+    } else {
+      res[learner_id] =1;
+    };
+  };
+  return res
+}
+console.log(individualLearner(learnerSubmissions)) //{ '125': 3, '132': 2 } >>> Shows learner #125 has submitted 3 assignments and #132 has submitted 2 assignment (now need to add the scores)
+
+
+
+const learnerOne = learnerSubmissions.filter(function(item) { 
+  return item.learner_id === 125 ; 
+}); 
+console.log(learnerOne);
+
+
+const learnerTwo = learnerSubmissions.filter(function(item) { 
+  return item.learner_id === 132 ; 
+}); 
+console.log(learnerTwo);
+
+
+// total score obtained by learner #125
+
+let scoresOne=[];
+let totalOne = 0;
+
+for (let i=0; i<learnerOne.length; i++){
+  totalOne+= learnerOne[i].submission.score
+  scoresOne.push(learnerOne[i].length)
+
+}
+console.log(totalOne); // result 597
+
+// total score obtained by learner #132
+
+let scoresTwo=[];
+let totalTwo = 0;
+
+for (let i=0; i<learnerTwo.length; i++){
+  totalTwo+= learnerTwo[i].submission.score
+  scoresTwo.push(learnerTwo[i].length)
+
+}
+console.log(totalTwo); // result 179
+
+
+let learnerScores = [totalOne, totalTwo];
+learnerScores.forEach((v,i,arr) => arr[i] = `learner: ${v}`)
+
+console.log(learnerScores)
+
+
+
+const learners= learnerSubmissions.map(({learner_id})=>learner_id) 
+
+
+function uniqueLearners(ids){
+  return ids.filter((value,index) => ids.indexOf(value) === index)
   
-//   const search = objArr.filter(function(item) { 
-//     return item.name === 'julie'; 
-// }); 
-// console.log(search);
-
-// }
+};
+console.log(uniqueLearners(learners)) // returns [ 125, 132 ]  unique learners
 
 
-
-//   for (let i=0; i<assignments.length; i++){
-//     const courseId = assignments.course_id[i]
-// console.log(courseId)
-//   }
+console.log(uniqueLearners(learners))
 
 
+function setID(item, index) {
+  let fullname = "id: " + item;
+    return fullname;
+}
+let output= uniqueLearners(learners).map(setID);
+console.log(output);  // returns [ 'id: 125', 'id: 132' ]   given keys to unique learners
 
-  
+
+
 
 
 // return result;//
@@ -177,144 +191,3 @@ for (let learnerId in learnerSubmission){
 const result = getLearnerData(courseInfo, assignmentGroup, learnerSubmissions);
 
 // console.log(result);
-
-// destructuring Object
-// function displayCourseId({course_id, group_weight}){
-//     console.log(`the course is ${course_id} and weight is ${group_weight} `);
-// }
-// displayCourseId(assignmentGroup)
-
-
-// let learnerId = [];
-// learnerSubmissions.forEach((LearnId) => )
-
-//Array Destructure
-// const colorArr = ["red", "yellow", "blue", "green", "white", "black"];
-
-// const [one, sond, third] = colorArr;
-// console.log(one, sond, third );
-
-//-----------------------------------
-// Object Desstructure
-// const freeCodeCamp = {
-//   frontend: "React",
-//   backend: "Node",
-//   database: "MongoDB",
-// };
-//------------------------------------
-// const { frontend, backend } = freeCodeCamp;
-
-// console.log(one, two);
-
-
-
-// let arr = [
-//   {val:"a"},
-//   {val:"b"}
-// ];
-
-// const [{val: valueOfA}, {val: valueOfB}] = arr
-
-// console.log(
-//   valueOfA, valueOfB
-// )
-
-// learnerSubmissions.filter(function(learId){
-// console.log(learId)
-//   });
-
-//Array Destruction ------>
-
-  // const learner1 = learnerSubmissions.filter(function(learId){
-  //   return learId.learner_id === 125;
-  // });
-  // // console.log(learner1)
-
-
-  // const learner2 = learnerSubmissions.filter(function(learId){
-  //   return learId.submission[0];
-  // });
-  // console.log(learner2)
-
-
-
-// const {assignments} = assignmentGroup;
-//   console.log( assignments)
-// console.log(assignments[2].points_possible)
-// const pointsPossible= assignments[2].points_possible
-// if (assignments[2].points_possible > 400){
-// console.log("you passed")
-// }
-
-
-
-
-
-// Array of objects -------------------useful--------
-
-var objArr = [ 
-    { 
-        name: 'john', 
-        age: 12, 
-        gender: 'male'
-    }, 
-    { 
-        name: 'jane', 
-        age: 15, 
-        gender: 'female'
-    }, 
-    { 
-        name: 'julie', 
-        age: 20, 
-        gender: 'trans'
-    } 
-]; 
-  
-// console.log("Accessing the Array using the forEach loop:") 
-// objArr.filter(function(item) { 
-//     console.log(item); 
-// }); 
-console.log("Using the Filer method to acces value") 
-const search = objArr.filter(function(item) { 
-    return item.name === 'julie'; 
-}); 
-console.log(search);
-
-
-
-// // console.log(learnerSubmissions.map(({learner_id})=>learner_id))
-// // console.log(learnerSubmissions.map(({assignment_id})=>assignment_id))
-// console.log(learnerSubmissions.map(({submission})=>submission))
-// // console.log(learnerSubmissions.map(({assignment_id})=>assignment_id))
-
-
-
-// console.log(getLearnerData(courseInfo, assignmentGroup, learnerSubmissions));
-
-
-
-  
-//   function getLearnerData(course, ag, submissions) {
-//     // here, we would process this data to achieve the desired result.
-//     const result = [
-//       {
-//         id: 125,
-//         avg: 0.985, // (47 + 150) / (50 + 150)
-//         1: 0.94, // 47 / 50
-//         2: 1.0 // 150 / 150
-//       },
-//       {
-//         id: 132,
-//         avg: 0.82, // (39 + 125) / (50 + 150)
-//         1: 0.78, // 39 / 50
-//         2: 0.833 // late: (140 - 15) / 150
-//       }
-//     ];
-  
-//     return result;
-//   }
-  
-//   const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
-  
-//   console.log(result);
-  
