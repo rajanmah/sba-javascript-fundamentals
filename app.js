@@ -85,18 +85,33 @@ function getLearnerData(courseInfo,assignmentGroup,learnerSubmissions){
 } 
 
 }catch(error) {
-  console.log(error)  // try catch to ensure course Ids are matched.
+  // console.log(error)  // try catch to ensure course Ids are matched.
 }
 
 
 
-  const { id, course_id, group_weight,assignments} = assignmentGroup; //Destructuring the object assignmentGroup
+  // const { id, course_id, group_weight,assignments} = assignmentGroup; //Destructuring the object assignmentGroup
+  
+  // let newAssignments=[];
+  // let dateInput = assignments.due_at;
+  //   let dateObject = new Date(dateInput)
+  //   console.log(dateObject);
+
+  // for (let i=0; i<assignments.length; i++){
+  //    if (assignments.due_at!===)
+  
+  // }
+ 
+  
+  
+
+  
   let forTotalScore = assignmentGroup.assignments;
   let pointsPossible = 0;
   for (let i=0;i<forTotalScore.length;i++){
      pointsPossible +=forTotalScore[i].points_possible
   }
-  console.log(pointsPossible) //returns 700 sum of points_possible of all 3 assignments
+  // console.log(pointsPossible) //returns 700 sum of points_possible of all 3 assignments
 
 
 
@@ -114,23 +129,20 @@ const individualLearner = (learnerSubmissions = []) => {
   };
   return res
 }
-console.log(individualLearner(learnerSubmissions)) //{ '125': 3, '132': 2 } >>> Shows learner #125 has submitted 3 assignments and #132 has submitted 2 assignment (now need to add the scores)
+// console.log(individualLearner(learnerSubmissions)) //{ '125': 3, '132': 2 } >>> Shows learner #125 has submitted 3 assignments and #132 has submitted 2 assignment (now need to add the scores)
 
 
 
 const learnerOne = learnerSubmissions.filter(function(item) { 
   return item.learner_id === 125 ; 
 }); 
-console.log(learnerOne);
+// console.log(learnerOne); // Array of objects only relating to learner with id 125 
 
 
 const learnerTwo = learnerSubmissions.filter(function(item) { 
   return item.learner_id === 132 ; 
 }); 
-console.log(learnerTwo);
-
-
-// total score obtained by learner #125
+// console.log(learnerTwo); // Array of objects only relating to learner with id 132
 
 let scoresOne=[];
 let totalOne = 0;
@@ -140,9 +152,9 @@ for (let i=0; i<learnerOne.length; i++){
   scoresOne.push(learnerOne[i].length)
 
 }
-console.log(totalOne); // result 597
+// console.log(totalOne); // result 597 score scored by learner 1
 
-// total score obtained by learner #132
+
 
 let scoresTwo=[];
 let totalTwo = 0;
@@ -152,13 +164,10 @@ for (let i=0; i<learnerTwo.length; i++){
   scoresTwo.push(learnerTwo[i].length)
 
 }
-console.log(totalTwo); // result 179
+// console.log(totalTwo); // result 179 scire scored by learner2
 
-
-let learnerScores = [totalOne, totalTwo];
-learnerScores.forEach((v,i,arr) => arr[i] = `learner: ${v}`)
-
-console.log(learnerScores)
+ let learnerScored = [totalOne, totalTwo]
+//  console.log(learnerScored); //returns [ 597, 179 ] array of total scores scored by each learner
 
 
 
@@ -169,25 +178,54 @@ function uniqueLearners(ids){
   return ids.filter((value,index) => ids.indexOf(value) === index)
   
 };
-console.log(uniqueLearners(learners)) // returns [ 125, 132 ]  unique learners
-
-
-console.log(uniqueLearners(learners))
+// console.log(uniqueLearners(learners)) // returns [ 125, 132 ]  unique learners
 
 
 function setID(item, index) {
-  let fullname = "id: " + item;
+  let fullname = "learner_id: " + item;
     return fullname;
 }
 let output= uniqueLearners(learners).map(setID);
-console.log(output);  // returns [ 'id: 125', 'id: 132' ]   given keys to unique learners
+// console.log(output);  // returns [ 'learner_id: 125', 'learner_id: 132' ]   given keys to unique learners
 
 
 
 
 
-// return result;//
+
+let learnerScores = [totalOne, totalTwo];
+learnerScores.forEach((v,i,arr) => arr[i] = `learner score: ${v}`)
+
+// console.log(learnerScores) //returns [ 'learner: 597', 'learner: 179' ] given keys to array of scores obtained by each learner
+
+
+
+const avg = [];
+for (let i=0;i<learnerScored.length;i++){
+  avg.push(learnerScored[i]/pointsPossible*100)
+ 
+}
+// console.log(avg) // returnsv[ 85.28571428571429, 25.571428571428573 ] array of average scores scored by each learner
+
+function setIDs(item, index) {
+  let fullname = "avg: " + item;
+    return fullname;
+}
+let avgOutput= avg.map(setIDs);
+// console.log(avgOutput);  //returns [ 'avg: 85.28571428571429', 'avg: 25.571428571428573' ] assigned keys to array of average scored by each learner
+
+
+
+let result = [output, avgOutput]
+return result
+/*returns [
+  [ 'id: 125', 'id: 132' ],
+  [ 'avg: 85.28571428571429', 'avg: 25.571428571428573' ]
+]
+*/
+
+
 }
 const result = getLearnerData(courseInfo, assignmentGroup, learnerSubmissions);
 
-// console.log(result);
+console.log(result);
