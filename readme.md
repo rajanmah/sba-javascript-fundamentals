@@ -8,4 +8,4 @@ I used both Array and Object destructuring to get in to nested elements and thei
 
 I tried to remove an object with the due_at "3156-11-15", I was not able to figure out how to. I should not include that data. but I included that in the total possible points too.
 
-
+I tried to get array of objects as final result. But it was in array form. I was not able to merge their keys and values to form an array of objects as final result.
